@@ -4,7 +4,7 @@ import threading
 thr = None
 
 
-def openMenu(keymap, vidSrc, outputSize, camContainer):
+def openMenu(keymap, camContainer):
     global thr
     if thr is not None and thr.isAlive():
         return
@@ -14,12 +14,12 @@ def openMenu(keymap, vidSrc, outputSize, camContainer):
         namemap[v.__name__] = v
 
     thr = threading.Thread(target = tkPopup,
-                           args = (namemap, vidSrc, outputSize, camContainer)
+                           args = (namemap, camContainer)
                            )
     thr.start()
 
 
-def tkPopup(namemap, vidSrc, outputSize, camContainer):
+def tkPopup(namemap, camContainer):
     win = tk.Tk()
     win.minsize(300, 300)
 
@@ -47,10 +47,10 @@ def tkPopup(namemap, vidSrc, outputSize, camContainer):
         from numpy import array
         #print(entry.get("1.0", "end"))
         options = eval(entry.get("1.0", "end")) # Eww, Sorry about this
-        camContainer.changeCam(namemap[choice.get()].Camera(vidSrc, outputSize, **options))
+        camContainer.changeCam(namemap[choice.get()].Camera, **options)
         win.destroy()
 
-    go = tk.Button(buttonFrame, text ="Go", command = update)
+    go = tk.Button(buttonFrame, text = "Go", command = update)
     go.pack(side = tk.LEFT)
 
     setoptiontext(choice.get())
@@ -59,7 +59,7 @@ def tkPopup(namemap, vidSrc, outputSize, camContainer):
 
 def dictprinter(dic):
     out = "{\n"
-    for k,v in dic.items():
+    for k, v in dic.items():
         out += repr(k) + " : " + repr(v) + ",\n"
     out += "}"
     return out

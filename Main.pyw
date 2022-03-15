@@ -25,7 +25,8 @@ def main():
 
 def mainloop(vidSrc):
     global cam
-    cam = CamContainer(Full.Camera(vidSrc, outputSize))
+    cam = CamContainer(vidSrc, outputSize)
+    cam.changeCam(Full.Camera)
     while True:
         frame = cam.getFrame()
         cv2.imshow('Python Magic Cam', frame)
@@ -36,10 +37,10 @@ def mainloop(vidSrc):
             break
 
         if keydown == chr(96): # ¬ Key under esc
-            Optionsmenu.openMenu(keymap, vidSrc, outputSize, cam)
+            Optionsmenu.openMenu(keymap, cam)
 
         if keydown in keymap.keys():
-            cam.changeCam(keymap[keydown].Camera(vidSrc, outputSize))
+            cam.changeCam(keymap[keydown].Camera)
 
 
 def validateSrc(vidSrc):
@@ -53,14 +54,15 @@ def validateSrc(vidSrc):
 
 
 class CamContainer:
-    def __init__(this, cam):
-        this.cam = cam
+    def __init__(this, vidSrc, outputSize):
+        this.vidSrc = vidSrc
+        this.outputSize = outputSize
 
     def getFrame(this):
         return this.cam.getFrame()
 
-    def changeCam(this, cam):
-        this.cam = cam
+    def changeCam(this, cam, **kwargs):
+        this.cam = cam(this.vidSrc, this.outputSize, **kwargs)
 
 
 if __name__ == "__main__":

@@ -5,7 +5,7 @@ from .CameraTypes import *
 
 defaults = {}
 
-class FullCam(CameraType):
+class Camera(CameraType):
     def __init__(this, *args, **kwargs):
         super().__init__(*args, **kwargs)
         this.__dict__.update(copy.deepcopy(defaults))

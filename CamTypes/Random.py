@@ -8,7 +8,7 @@ defaults = {"camScale" : 0.75,
             }
 
 
-class RandomCam(CameraType):
+class Camera(CameraType):
     def __init__(this, *args, **kwargs):
         super().__init__(*args, **kwargs)
         this.__dict__.update(copy.deepcopy(defaults))

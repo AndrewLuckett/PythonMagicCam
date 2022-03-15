@@ -6,8 +6,8 @@ camNum = 0 # Keep at zero unless you have multiple valid cameras
 outputSize = np.array([720, 1280, 3])
 
 keymap = {'w' : Full.FullCam,
-          'e': Dvd.DvdCam,
-          "r": Random.RandomCam
+          'e' : Dvd.DvdCam,
+          "r" : Random.RandomCam
           }
 
 
@@ -49,3 +49,4 @@ def validateSrc(vidSrc):
 
 if __name__ == "__main__":
     main()
+

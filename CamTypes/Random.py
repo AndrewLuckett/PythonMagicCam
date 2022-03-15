@@ -15,7 +15,7 @@ class RandomCam(CameraType):
         this.__dict__.update(kwargs)
 
         ret, frame = this.cameraSource.read()
-        frame = cv2.resize(frame, (0,0), fx=this.camScale, fy=this.camScale)
+        frame = cv2.resize(frame, (0, 0), fx = this.camScale, fy = this.camScale)
         this.bounds = this.windowSize - frame.shape
 
         this.count = 0
@@ -26,7 +26,7 @@ class RandomCam(CameraType):
 
     def getFrame(this):
         ret, frame = this.cameraSource.read()
-        frame = cv2.resize(frame, (0,0), fx=this.camScale, fy=this.camScale)
+        frame = cv2.resize(frame, (0, 0), fx = this.camScale, fy = this.camScale)
 
         image = np.zeros(this.windowSize, np.uint8)
         image[:] = (0, 255, 0)
@@ -38,7 +38,8 @@ class RandomCam(CameraType):
             this.offset = this.offset.astype(int)
             this.count = 0
 
-        image[this.offset[0]:this.offset[0]+frame.shape[0],
-              this.offset[1]:this.offset[1]+frame.shape[1]] = frame
+        image[this.offset[0] : this.offset[0] + frame.shape[0],
+              this.offset[1] : this.offset[1] + frame.shape[1]] = frame
 
         return image
+

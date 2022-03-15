@@ -7,3 +7,4 @@ class CameraType:
 
     def getFrame(this):
         return None
+

@@ -1,2 +1,2 @@
 
-__all__ = ["Dvd", "Full", "Random"]
+__all__ = ["Dvd", "Full", "Random", "Solitaire"]

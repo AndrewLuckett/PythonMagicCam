@@ -9,6 +9,7 @@ outputSize = np.array([720, 1280, 3])
 keymap = {'w' : Full,
           'e' : Dvd,
           "r" : Random,
+          "t" : Solitaire,
           }
 
 

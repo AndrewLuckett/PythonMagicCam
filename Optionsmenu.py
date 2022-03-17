@@ -2,7 +2,7 @@ import tkinter as tk
 import threading
 
 thr = None
-
+win = None
 
 def openMenu(keymap, camContainer):
     global thr
@@ -19,7 +19,14 @@ def openMenu(keymap, camContainer):
     thr.start()
 
 
+def closeMenu():
+    global win
+    if win is not None:
+        win.quit()
+
+
 def tkPopup(namemap, camContainer):
+    global win
     win = tk.Tk()
     win.minsize(300, 300)
 

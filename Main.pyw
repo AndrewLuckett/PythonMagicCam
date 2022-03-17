@@ -17,9 +17,9 @@ keymap = {'w' : Full,
 def main():
     vidSrc = cv2.VideoCapture(camNum)
     assert validateSrc(vidSrc)
-    
+
     mainloop(vidSrc)
-    
+
     vidSrc.release()
     cv2.destroyAllWindows()
 
@@ -35,6 +35,7 @@ def mainloop(vidSrc):
         keydown = chr(cv2.waitKey(1) & 0xFF)
 
         if keydown == chr(27): # Esc to close
+            Optionsmenu.closeMenu()
             break
 
         if keydown == chr(96): # ¬ Key under esc

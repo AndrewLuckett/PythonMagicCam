@@ -10,6 +10,7 @@ keymap = {'w' : Full,
           'e' : Dvd,
           "r" : Random,
           "t" : Solitaire,
+          "y" : Mirror,
           }
 
 

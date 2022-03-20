@@ -32,7 +32,7 @@ class Camera(CameraType):
         frame = cv2.resize(frame, (0, 0), fx = this.scale, fy = this.scale)
 
         if this.preMirror:
-            frame = cv2.flip(frame, 1)
+            frame = cv2.flip(frame, 0 if this.vert else 1)
 
         image = np.zeros(this.windowSize, np.uint8)
         image[:] = (0, 255, 0)

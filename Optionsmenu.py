@@ -2,12 +2,14 @@ import tkinter as tk
 import threading
 
 thr = None
-win = None
+parentAlive = False
 
 def openMenu(keymap, camContainer):
-    global thr
+    global thr, parentAlive
     if thr is not None and thr.isAlive():
         return
+
+    parentAlive = True
 
     namemap = {}
     for v in keymap.values():
@@ -20,15 +22,21 @@ def openMenu(keymap, camContainer):
 
 
 def closeMenu():
-    global win
-    if win is not None:
-        win.quit()
+    global parentAlive
+    parentAlive = False
 
 
 def tkPopup(namemap, camContainer):
-    global win
+    # Tk instance in thread
+    # Yucky because tk hates not being in main thread
     win = tk.Tk()
     win.minsize(300, 300)
+
+    def checkValid():
+        global parentAlive
+        win.after(1000, checkValid)
+        if not parentAlive:
+            win.destroy()
 
     def setoptiontext(value):
         entry.delete(1.0, "end")
@@ -61,7 +69,9 @@ def tkPopup(namemap, camContainer):
     go.pack(side = tk.LEFT)
 
     setoptiontext(choice.get())
-    tk.mainloop()
+
+    win.after(1000, checkValid)
+    win.mainloop()
 
 
 def dictprinter(dic):

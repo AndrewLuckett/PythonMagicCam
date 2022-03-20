@@ -3,7 +3,10 @@ import numpy as np
 import copy
 from .CameraTypes import *
 
-defaults = {}
+defaults = {"denoise" : False,
+            "denoiseFactor" : 9,
+            }
+
 
 class Camera(CameraType):
     def __init__(this, *args, **kwargs):
@@ -22,6 +25,9 @@ class Camera(CameraType):
     def getFrame(this):
         ret, frame = this.cameraSource.read()
         frame = cv2.resize(frame, (0, 0), fx = this.scale, fy = this.scale)
+
+        if this.denoise:
+            frame = cv2.bilateralFilter(frame, this.denoiseFactor, 10, 10)
 
         image = np.zeros(this.windowSize, np.uint8)
         image[:] = (0, 255, 0)

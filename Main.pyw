@@ -11,6 +11,7 @@ keymap = {'w' : Full,
           "r" : Random,
           "t" : Solitaire,
           "y" : Mirror,
+          "u" : SolitaireGravity
           }
 
 

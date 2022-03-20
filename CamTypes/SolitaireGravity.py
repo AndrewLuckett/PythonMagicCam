@@ -6,6 +6,7 @@ from .CameraTypes import *
 defaults = {"camScale" : 0.5,
             "horibounds" : (1, 10),
             "bouncybounds" : (1.0, 0.4),
+            "inbetweens": 0,
             }
 
 
@@ -29,11 +30,13 @@ class Camera(CameraType):
         ret, frame = this.cameraSource.read()
         frame = cv2.resize(frame, (0, 0), fx = this.camScale, fy = this.camScale)
 
-        this.bouncy.update()
-        offset = this.bouncy.getOffset().astype(int)
+        tweens = this.inbetweens + 1
+        for i in range(tweens):
+            this.bouncy.update(1 / tweens)
+            offset = this.bouncy.getOffset().astype(int)
 
-        this.image[offset[0] : offset[0] + frame.shape[0],
-                   offset[1] : offset[1] + frame.shape[1]] = frame
+            this.image[offset[0] : offset[0] + frame.shape[0],
+                       offset[1] : offset[1] + frame.shape[1]] = frame
 
         return this.image
 
@@ -66,11 +69,11 @@ class Bouncy:
         this.bounce = this.bouncymin + (1 - r) * this.bouncydelta
 
 
-    def update(this):
+    def update(this, percent = 1):
         if this.offset[0] == this.bounds[0]:
             this.velo[0] *= -this.bounce
-        this.velo[0] += 1
-        this.offset += this.velo
+        this.velo[0] += percent
+        this.offset += this.velo * percent
 
         if this.offset[0] > this.bounds[0]:
             this.offset[0] = this.bounds[0]

@@ -8,14 +8,13 @@ defaults = {"camScale" : 0.75,
             "velocity" : 1,
             "offset" : np.array([0, 0]),
             "randomStart" : True,
+            "staticSubtract" : False,
             }
 
 
 class Camera(CameraType):
     def __init__(this, *args, **kwargs):
-        super().__init__(*args, **kwargs)
-        this.__dict__.update(copy.deepcopy(defaults))
-        this.__dict__.update(kwargs)
+        super().__init__(*args, **kwargs, default = defaults)
 
         ret, frame = this.cameraSource.read()
         frame = cv2.resize(frame, (0, 0), fx = this.camScale, fy = this.camScale)
@@ -34,6 +33,22 @@ class Camera(CameraType):
         ret, frame = this.cameraSource.read()
         frame = cv2.resize(frame, (0, 0), fx = this.camScale, fy = this.camScale)
 
+        if this.staticSubtract:
+            temp = this.image.astype(int)
+            temp[:,:] -= (1, -1, 1)
+            temp = np.clip(temp, 0, 255)
+            this.image = temp.astype(np.uint8)
+
+        for i in range(int(this.velocity)):
+            this.update()
+
+            this.image[this.offset[0] : this.offset[0] + frame.shape[0],
+                       this.offset[1] : this.offset[1] + frame.shape[1]] = frame
+
+        return this.image
+
+
+    def update(this):
         if this.offset[0] >= this.bounds[0]:
             this.offset[0] = this.bounds[0] * 2 - this.offset[0]
             this.angle[0] = False
@@ -48,10 +63,5 @@ class Camera(CameraType):
             this.offset[1] = abs(this.offset[1])
             this.angle[1] = True
 
-        this.image[this.offset[0] : this.offset[0] + frame.shape[0],
-                   this.offset[1] : this.offset[1] + frame.shape[1]] = frame
-
-        this.offset += this.velocity * (this.angle * 2 - np.array([1, 1]))
-
-        return this.image
+        this.offset += this.angle * 2 - np.array([1, 1])
 

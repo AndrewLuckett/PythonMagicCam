@@ -1,18 +1,11 @@
 import cv2
 import numpy as np
 from CamTypes import *
+from KeyMap import *
 import Optionsmenu
 
 camNum = 0 # Keep at zero unless you have multiple valid cameras
 outputSize = np.array([720, 1280, 3])
-
-keymap = {'w' : Full,
-          'e' : Dvd,
-          "r" : Random,
-          "t" : Solitaire,
-          "y" : Mirror,
-          "u" : SolitaireGravity
-          }
 
 
 def main():

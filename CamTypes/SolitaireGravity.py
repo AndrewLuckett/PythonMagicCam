@@ -76,7 +76,7 @@ class Bouncy:
         if this.offset[0] > this.bounds[0]:
             this.offset[0] = this.bounds[0]
 
-        if this.offset[1] < 0 or this.offset[1] > this.bounds[1]:
+        if this.offset[1] < 0 or this.offset[1] > this.bounds[1] + 1:
             this.pickNew()
 
 

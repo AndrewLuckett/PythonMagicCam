@@ -6,7 +6,7 @@ parentAlive = False
 
 def openMenu(keymap, camContainer):
     global thr, parentAlive
-    if thr is not None and thr.isAlive():
+    if thr is not None and thr.is_alive():
         return
 
     parentAlive = True

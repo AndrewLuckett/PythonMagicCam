@@ -1,6 +1,5 @@
 import cv2
 import numpy as np
-from CamTypes import *
 from KeyMap import *
 import Optionsmenu
 
@@ -21,7 +20,7 @@ def main():
 def mainloop(vidSrc):
     global cam
     cam = CamContainer(vidSrc, outputSize)
-    cam.changeCam(Full.Camera)
+
     while True:
         frame = cam.getFrame()
         cv2.imshow('Python Magic Cam', frame)
@@ -53,6 +52,7 @@ class CamContainer:
     def __init__(this, vidSrc, outputSize):
         this.vidSrc = vidSrc
         this.outputSize = outputSize
+        this.changeCam(Full.Camera)
 
     def getFrame(this):
         return this.cam.getFrame()

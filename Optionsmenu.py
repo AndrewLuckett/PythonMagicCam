@@ -1,5 +1,6 @@
 import tkinter as tk
 import threading
+import ast
 
 thr = None
 parentAlive = False
@@ -61,7 +62,7 @@ def tkPopup(namemap, camContainer):
     def update():
         from numpy import array
         #print(entry.get("1.0", "end"))
-        options = eval(entry.get("1.0", "end")) # Eww, Sorry about this
+        options = ast.literal_eval(entry.get("1.0", "end")) # Eww, Sorry about this
         camContainer.changeCam(namemap[choice.get()].Camera, **options)
         win.destroy()
 
